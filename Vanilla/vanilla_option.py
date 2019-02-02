@@ -73,40 +73,40 @@ class vanilla_option:
     def bs_delta(self):
         # Function which gives the delta of the option in the Black-Scholes setting
         if self.option_type == 'Call':
-            delta = np.exp(-self.q*self.T)*norm.cdf(self.d1) # delta = N(d1)
+            bs_delta = np.exp(-self.q*self.T)*norm.cdf(self.d1) # delta = N(d1)
         elif self.option_type == 'Put':
-            delta = np.exp(-self.q*self.T)*(norm.cdf(self.d1) - 1) # delta(put) = delta(call) - 1
-        return delta
+            bs_delta = np.exp(-self.q*self.T)*(norm.cdf(self.d1) - 1) # delta(put) = delta(call) - 1
+        return bs_delta
        
         
     def bs_gamma(self):
         # Function which gives the gamma of the option in the Black-Scholes setting
         gamma = (np.exp(-self.q*self.T)*norm.pdf(self.d1)) / (self.S*self.sd*np.sqrt(self.T)) # gamma(put) = gamma(call)
-        return gamma
+        return bs_gamma
      
         
     def bs_vega(self):
         # Function which gives the vega of the option in the Black-Scholes setting
-        vega = self.S*np.sqrt(self.T)*np.exp(-self.q*self.T)*norm.pdf(self.d1) # vega(put) = vega(call)
-        return vega
+        bs_vega = self.S*np.sqrt(self.T)*np.exp(-self.q*self.T)*norm.pdf(self.d1) # vega(put) = vega(call)
+        return bs_vega
     
     
     def bs_rho(self):
         # Function which gives the rho of the option in the Black-Scholes setting
         if self.option_type == 'Call':
-            rho = self.T*self.K*np.exp(-self.r*self.T)*norm.cdf(self.d2)
+            bs_rho = self.T*self.K*np.exp(-self.r*self.T)*norm.cdf(self.d2)
         elif self.option_type == 'Put':
-            rho = -self.T*self.K*np.exp(-self.r*self.T)*norm.cdf(-self.d2)
-        return rho
+            bs_rho = -self.T*self.K*np.exp(-self.r*self.T)*norm.cdf(-self.d2)
+        return bs_rho
      
         
     def bs_theta(self):
         # Function which gives the theta of the option in the Black-Scholes setting
         if self.option_type == 'Call':
-            theta = ((-self.S*np.exp(-self.q*self.T)*self.sd*norm.pdf(self.d1) / (2*np.sqrt(self.T)) ) + (self.q*self.S*np.exp(-self.q*self.T)*norm.cdf(self.d1)) / 365 - ( self.r*self.K*np.exp(-self.r*self.T)*norm.cdf(self.d2) )) / 365         
+            bs_theta = ((-self.S*np.exp(-self.q*self.T)*self.sd*norm.pdf(self.d1) / (2*np.sqrt(self.T)) ) + (self.q*self.S*np.exp(-self.q*self.T)*norm.cdf(self.d1)) / 365 - ( self.r*self.K*np.exp(-self.r*self.T)*norm.cdf(self.d2) )) / 365         
         elif self.option_type == 'Put':
-            theta = ((-self.S*self.sd*norm.pdf(self.d1) / (2*np.sqrt(self.T)) ) - (self.q*self.S*np.exp(-self.q*self.T)*norm.cdf(self.d1)) / 365 + ( self.r*self.K*np.exp(-self.r*self.T)*norm.cdf(-self.d2) )) / 365
-        return theta
+            bs_theta = ((-self.S*self.sd*norm.pdf(self.d1) / (2*np.sqrt(self.T)) ) - (self.q*self.S*np.exp(-self.q*self.T)*norm.cdf(self.d1)) / 365 + ( self.r*self.K*np.exp(-self.r*self.T)*norm.cdf(-self.d2) )) / 365
+        return bs_theta
        
         
     def mc_price(self, number_sim, method):
