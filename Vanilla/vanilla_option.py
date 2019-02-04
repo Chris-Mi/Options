@@ -81,7 +81,7 @@ class vanilla_option:
         
     def bs_gamma(self):
         # Function which gives the gamma of the option in the Black-Scholes setting
-        gamma = (np.exp(-self.q*self.T)*norm.pdf(self.d1)) / (self.S*self.sd*np.sqrt(self.T)) # gamma(put) = gamma(call)
+        bs_gamma = (np.exp(-self.q*self.T)*norm.pdf(self.d1)) / (self.S*self.sd*np.sqrt(self.T)) # gamma(put) = gamma(call)
         return bs_gamma
      
         
