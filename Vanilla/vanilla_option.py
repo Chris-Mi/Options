@@ -41,6 +41,12 @@ class vanilla_option:
             intrinsic = max(self.K-self.S, 0)
         return intrinsic
   
+    
+    def extrinsic(self):
+        # Function which computes the extrinsic (time) value of the option
+        extrinsic = self.bs_price() - self.intrinsic()
+        return extrinsic
+   
 
     def the_money(self):
         # Function which tells the % moneyness (ITM or OTM) of the option
@@ -66,7 +72,7 @@ class vanilla_option:
         if self.option_type == 'Call':
             bs_price = self.S*np.exp(-self.q*self.T)*norm.cdf(self.d1) - self.K*np.exp(-self.r*self.T)*norm.cdf(self.d2)
         elif self.option_type == 'Put':
-            bs_price = K*np.exp(-self.r*self.T)*norm.cdf(-self.d2) - self.S*np.exp(-self.q*self.T)*norm.cdf(-self.d1)
+            bs_price = self.K*np.exp(-self.r*self.T)*norm.cdf(-self.d2) - self.S*np.exp(-self.q*self.T)*norm.cdf(-self.d1)
         return bs_price
 
 
